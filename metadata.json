@@ -1,0 +1,6 @@
+{
+  "name": "Happy Friendship Day Card",
+  "description": "An interactive, beautifully animated Happy Friendship Day card featuring glassmorphism design, automated step sequences, confetti bursts, theme presets, music, and custom messages.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
