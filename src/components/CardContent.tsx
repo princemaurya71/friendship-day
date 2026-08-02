@@ -36,7 +36,7 @@ export const CardContent: React.FC<CardContentProps> = ({
         <div className="flex items-center space-x-2">
           <span className="flex h-2.5 w-2.5 rounded-full bg-pink-400 animate-pulse" />
           <span className="text-xs uppercase tracking-widest text-white/70 font-semibold">
-            Special Friendship Delivery
+            Special Friendship
           </span>
         </div>
         <div className="flex items-center space-x-1.5 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium border border-white/20 text-pink-200">
