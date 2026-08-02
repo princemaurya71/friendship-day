@@ -9,7 +9,7 @@ class SoundEngine {
   // ============================
 
   // Replace with your song
-  private songUrl = {friendshipSong};
+  private songUrl = friendshipSong;
 
   // Song play start time (seconds)
   private startTime = 30;
@@ -55,15 +55,21 @@ class SoundEngine {
   }
 
   public async playSong() {
-    if (this.isMuted || !this.audio) return;
+  if (this.isMuted || !this.audio) return;
 
-    try {
+  try {
+    // Start from startTime only the first time
+    if (this.audio.currentTime === 0) {
       this.audio.currentTime = this.startTime;
-      await this.audio.play();
-    } catch (err) {
-      console.log("Autoplay blocked by browser.");
     }
+
+    if (!this.audio.paused) return;
+
+    await this.audio.play();
+  } catch (err) {
+    console.error(err);
   }
+}
 
   public pauseSong() {
     this.audio?.pause();

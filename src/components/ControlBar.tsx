@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { motion } from "motion/react";
+import React from 'react';
+import { motion } from 'motion/react';
 import {
   Play,
   Pause,
@@ -11,14 +11,14 @@ import {
   Sparkles,
   Gauge,
   FastForward,
-} from "lucide-react";
-import { SceneStage } from "../types";
-import { soundEngine } from "../utils/audio";
+} from 'lucide-react';
+import { SceneStage } from '../types';
 
 interface ControlBarProps {
   isPlaying: boolean;
   activeScene: SceneStage;
   progressPercent: number;
+  isMuted: boolean;
   playbackSpeed: number;
   onTogglePlay: () => void;
   onReplay: () => void;
@@ -34,6 +34,7 @@ export const ControlBar: React.FC<ControlBarProps> = ({
   isPlaying,
   activeScene,
   progressPercent,
+  isMuted,
   playbackSpeed,
   onTogglePlay,
   onReplay,
@@ -45,13 +46,12 @@ export const ControlBar: React.FC<ControlBarProps> = ({
   onTriggerConfetti,
 }) => {
   const scenes: { id: SceneStage; label: string }[] = [
-    { id: "envelope", label: "1. Envelope" },
-    { id: "opening", label: "2. Unfolding" },
-    { id: "textReveal", label: "3. Reveal" },
-    { id: "celebration", label: "4. Celebrate" },
+    { id: 'envelope', label: '1. Envelope' },
+    { id: 'opening', label: '2. Unfolding' },
+    { id: 'textReveal', label: '3. Reveal' },
+    { id: 'celebration', label: '4. Celebrate' },
   ];
 
-  const [isMuted, setIsMuted] = useState(false);
   return (
     <motion.div
       initial={{ y: 50, opacity: 0 }}
@@ -89,57 +89,31 @@ export const ControlBar: React.FC<ControlBarProps> = ({
       {/* Main Buttons Toolbar */}
       <div className="flex items-center justify-between text-white pt-1">
         {/* Play / Pause / Replay Group */}
-        <div className="flex items-center space-x-2">
-          {/* Play / Pause Music */}
+        {/* <div className="flex items-center space-x-1 sm:space-x-2">
           <button
-            onClick={() => {
-              if (isPlaying) {
-                soundEngine.pauseSong();
-              } else {
-                soundEngine.resumeSong();
-              }
-              onTogglePlay();
-            }}
-            title={isPlaying ? "Pause Music" : "Play Music"}
+            onClick={onTogglePlay}
+            title={isPlaying ? 'Pause Animation' : 'Play Animation'}
             className="p-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 transition-colors flex items-center justify-center text-pink-300"
           >
-            {isPlaying ? (
-              <Pause className="w-4 h-4" />
-            ) : (
-              <Play className="w-4 h-4 fill-pink-300" />
-            )}
+            {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-pink-300" />}
           </button>
 
-          {/* Replay Song */}
           <button
-            onClick={() => {
-              soundEngine.stopSong();
-              soundEngine.playSong();
-              onReplay();
-            }}
-            title="Replay Music"
+            onClick={onReplay}
+            title="Replay Sequence"
             className="p-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 transition-colors flex items-center justify-center text-white/80"
           >
             <RotateCcw className="w-4 h-4" />
           </button>
 
-          {/* Mute / Unmute */}
           <button
-            onClick={() => {
-              soundEngine.setMuted(!isMuted);
-              setIsMuted(!isMuted);
-            }}
-            title={isMuted ? "Unmute Music" : "Mute Music"}
+            onClick={onSkipToEnd}
+            title="Skip to Final Card"
             className="p-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 transition-colors flex items-center justify-center text-white/80"
           >
-            {isMuted ? (
-              <VolumeX className="w-4 h-4" />
-            ) : (
-              <Volume2 className="w-4 h-4" />
-            )}
+            <FastForward className="w-4 h-4" />
           </button>
 
-          {/* Animation Speed */}
           <button
             onClick={onChangeSpeed}
             title={`Speed: ${playbackSpeed}x`}
@@ -148,7 +122,7 @@ export const ControlBar: React.FC<ControlBarProps> = ({
             <Gauge className="w-3.5 h-3.5" />
             <span>{playbackSpeed}x</span>
           </button>
-        </div>
+        </div> */}
 
         {/* Action FX Buttons */}
         <div className="flex items-center space-x-1 sm:space-x-2">
@@ -163,14 +137,10 @@ export const ControlBar: React.FC<ControlBarProps> = ({
 
           <button
             onClick={onToggleMute}
-            title={isMuted ? "Unmute Chime Sound" : "Mute Sound"}
+            title={isMuted ? 'Unmute Chime Sound' : 'Mute Sound'}
             className="p-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 transition-colors flex items-center justify-center text-white/80"
           >
-            {isMuted ? (
-              <VolumeX className="w-4 h-4 text-red-400" />
-            ) : (
-              <Volume2 className="w-4 h-4 text-emerald-400" />
-            )}
+            {isMuted ? <VolumeX className="w-4 h-4 text-red-400" /> : <Volume2 className="w-4 h-4 text-emerald-400" />}
           </button>
 
           <button
@@ -191,6 +161,5 @@ export const ControlBar: React.FC<ControlBarProps> = ({
         </div>
       </div>
     </motion.div>
-    
   );
 };
